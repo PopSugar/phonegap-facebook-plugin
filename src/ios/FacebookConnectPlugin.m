@@ -267,16 +267,10 @@
         dialog.fromViewController = [self topMostController];
         dialog.shareContent = content;
         dialog.delegate = self;
-        // Adopt native share sheets with the following line
-        if (params[@"share_sheet"]) {
-        	dialog.mode = FBSDKShareDialogModeShareSheet;
-        } else if (params[@"share_feedBrowser"]) {
-        	dialog.mode = FBSDKShareDialogModeFeedBrowser;
-        } else if (params[@"share_native"]) {
-        	dialog.mode = FBSDKShareDialogModeNative;
-        } else if (params[@"share_feedWeb"]) {
-        	dialog.mode = FBSDKShareDialogModeFeedWeb;
-        }
+        // We always use the browser sharing page because
+        // the native sharing page doesn't allow to share caption
+        dialog.mode = FBSDKShareDialogModeFeedBrowser;
+
 
         [dialog show];
         return;
@@ -805,10 +799,10 @@ void FBMethodSwizzle(Class c, SEL originalSelector) {
     }
     // Required by FBSDKCoreKit for deep linking/to complete login
     [[FBSDKApplicationDelegate sharedInstance] application:application openURL:url sourceApplication:[options valueForKey:@"UIApplicationOpenURLOptionsSourceApplicationKey"] annotation:0x0];
-    
+
     // Call existing method
     [self swizzled_application:application openURL:url sourceApplication:[options valueForKey:@"UIApplicationOpenURLOptionsSourceApplicationKey"] annotation:0x0];
-    
+
     // NOTE: Cordova will run a JavaScript method here named handleOpenURL. This functionality is deprecated
     // but will cause you to see JavaScript errors if you do not have window.handleOpenURL defined:
     // https://github.com/Wizcorp/phonegap-facebook-plugin/issues/703#issuecomment-63748816
