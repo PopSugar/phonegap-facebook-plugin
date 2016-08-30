@@ -1,4 +1,4 @@
-# Apache Cordova Facebook Plugin
+# Apache Cordova Facebook Plugin (POPSUGAR Fork)
 
 This is the official plugin for Facebook in Apache Cordova/PhoneGap!
 
